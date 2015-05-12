@@ -1,0 +1,37 @@
+<h1></h1>
+
+<% if @questions.any? %>
+  <h2>here are your questions</h2>
+  <form action="/survey/<%= @id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <ol>
+      <% @questions.each() do |question| %>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="checkbox_ids[]" value="<%= question.id %>"><li><%= question.name %></li>
+        </label>
+      </div>
+      <% end %>
+    </ol>
+    <button type="submit" class="btn-success">Delete checked questions</button>
+  </form>
+
+  <p><form action="/survey/<%= @id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <input id="question6" name="question6" placeholder="Question Text">
+    <button type="submit" class="btn-success">Add question</button>
+  </form></p>
+<% else %>
+
+  <form action="/survey/<%= @id %>" method="post">
+    <label for="Questions">Enter questions for your new survey: </label>
+    <br><input id="question1" name="question1" placeholder="Question 1 Text">
+    <br><input id="question2" name="question2" placeholder="Question 2 Text">
+    <br><input id="question3" name="question3" placeholder="Question 3 Text">
+    <br><input id="question4" name="question4" placeholder="Question 4 Text">
+    <br><input id="question5" name="question5" placeholder="Question 5 Text">
+    <br><button type="submit" class="btn-success">Add questions</button>
+  </form>
+
+<% end %>
+<br>
