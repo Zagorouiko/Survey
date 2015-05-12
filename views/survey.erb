@@ -2,18 +2,15 @@
 
 <% if @questions.any? %>
   <h2>here are your questions</h2>
-  <form action="/survey/<%= @id %>" method="post">
-    <input type="hidden" name="_method" value="delete">
+  <form action="/thank_you" method="post">
     <ol>
       <% @questions.each() do |question| %>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name="checkbox_ids[]" value="<%= question.id %>"><li><%= question.name %></li>
-        </label>
-      </div>
+        <li><%= question.name %></li>
+        <input type="hidden" name="question_ids[]" value="<%= question.id %>">
+        <input id="answer<%= question.id %>" name="answers[]" placeholder="Answer" value="">
       <% end %>
     </ol>
-    <button type="submit" class="btn-success">Delete checked questions</button>
+    <button type="submit" class="btn-success">answer questions</button>
   </form>
 
   <p><form action="/survey/<%= @id %>" method="post">

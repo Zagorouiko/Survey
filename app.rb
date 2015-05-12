@@ -52,13 +52,42 @@ end
 
 delete('/survey/:id') do
   @id = params.fetch('id').to_i
-  @checkbox_ids = params.fetch("checkbox_ids")
-  @checkbox_ids.each() do |quest|
-    question = Question.find(quest)
-    question.delete()
-  end
-  # to_delete2 = params.fetch("checkbox_ids")
-  # Question.to_delete(to_delete2)
+  # @checkbox_ids = params.fetch("checkbox_ids")
+  # @checkbox_ids.each() do |quest|
+  #   question = Question.find(quest)
+  #   question.delete()
+  # end
   @questions = Question.survey_questions(@id)
   erb(:survey)
 end
+
+post('/thank_you') do
+  @question_ids = params.fetch('question_ids')
+  @questions = ""
+  @answers = params.fetch('answers')
+  counter = 0
+  @question_ids.each() do |id|
+    Answer.create({:questions_id => id, :words => @answers[counter]})
+    if @answers[counter] != ""
+      @questions = @questions + " " + @question_ids[counter].to_s + ","
+      # if counter == (@question_ids.length - 1)
+      #   @questions -= ","
+      # end
+    end
+    counter += 1
+  end
+  erb(:thank_you)
+end
+
+
+
+
+# <div class="checkbox">
+#   <label>
+#     <input type="checkbox" name="checkbox_ids[]" value="<%= question.id %>"><li><%= question.name %></li>
+#     <form action="/thank_you" method="post">
+#       <input type="hidden" name="question_ids[]" value="<%= question.id %>">
+#       <input id="answer<%= question.id %>" name="answers[]" placeholder="Answer" value="">
+#     </form>
+#   </label>
+# </div>

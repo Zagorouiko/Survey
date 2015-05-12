@@ -12,13 +12,4 @@ class Question < ActiveRecord::Base
     end
     desired_questions
   end
-
-  define_singleton_method(:to_delete) do |ids|
-    binding.pry
-    ids.each() do |id|
-      question = Question.find(id)
-      question.delete
-    end
-  end
-
 end
